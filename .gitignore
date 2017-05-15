@@ -1,0 +1,14 @@
+#Ignore backup files
+*~
+
+#Ignore classpath file
+.classpath
+
+#Ignore project file
+.project
+
+#Ignore target directory
+/target/
+
+#Ignore .settings directory
+.settings/
