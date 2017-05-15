@@ -1,0 +1,102 @@
+Como utilizar o TreeRESTService
+
+Método para cadastrar nó
+
+POST - /node
+ 
+Request
+	- code: string
+	- description: string
+	- parentId: number
+	- detail: string
+
+Response
+	- id: number
+
+O método para cadastrar o nó, em caso de sucesso, retorne o id do novo nó cadastrado. Em caso de falha, o método retorna os seguintes códigos de erro:
+
+	id: -1 -> Quando o nó pai (parentId) não existe na base de dados;
+	
+	id: -2 -> Quando ocorre um erro ao tentar criar o novo nó na base de dados;	
+
+	
+Método para atualizar nó
+
+PUT - /node
+
+Request
+	- id: number
+	- code: string
+	- description: string
+	- parentId: number
+	- detail: string
+
+Response
+	- id: number
+	
+O método para atualizar o nó, em caso de sucesso, retorne o id do nó atualizado. Em caso de falha, o método retorna os seguintes códigos de erro:
+
+	id: -1 -> O nó a ser atualizado ainda não existe na base de dados
+	
+	id: -2 -> Um nó raiz (i.e. um nó que não possui pai) tem o seu nó pai atualizado, porém, o nó pai indicado não existe na base de dados;
+	
+	id: -3 -> O novo pai de um nó que não é raiz (i.e. já possui um nó pai cadastrado) não existe na base de dados;
+	
+	
+Método para buscar toda a estrutura
+
+GET - /node
+
+Response
+	- id: number
+	- code: string
+	- description: string
+	- parentId: number
+	- detail: string
+	- children: array
+		- id: number
+		- code: string
+		- description: string
+		- parentId: number
+		- detail: string
+		- children: array 
+		
+O método para buscar toda a estrutura, em caso de sucesso, retorna todas as árvores cadastradas na base de dados.
+
+
+Método para buscar todos os nós abaixo de um nó específico
+
+GET - /node/{parentId}
+
+Response
+	- array
+		- id: number
+		- code: string
+		- description: string
+		- parentId: number
+		- detail: string
+		- hasChildren: boolean
+		
+O método para buscar todos os nós abaixo de um nó específico, em caso de sucesso, retorna todos os nós que são filhos diretos (i.e. filhos de 1 grau) do parentId indicado.
+
+
+Método para remover um nó da estrutura
+
+GET - /node/{id}/{removeChildren}
+
+	- id: number
+	- removeChildren: boolean
+
+Response
+
+	- id: number
+	
+	
+O método para remover um nó da estrutura, em caso de sucesso, retorna o id do nó que foi removido. Caso o nó possua filhos (children) e o 
+valor do parâmetro removeChildren for true, todos os filhos (até o último nível) também são removidos. Em caso de falha, o método retorna os seguintes códigos de erro:
+
+	id: -1 -> O nó que deseja ser removido não existe na base de dados;
+	
+	id: -2 -> O nó que deseja ser removido posui filhos (children) e o valor do parâmetro removeChildren é false, ou seja, a remoção dos filhos não é permitida;
+	
+	id: -3 ->  Caso ocorra algum inesperado ao remover o nó indicado da base de dados.
