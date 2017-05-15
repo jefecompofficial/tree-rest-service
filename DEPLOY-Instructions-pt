@@ -1,0 +1,26 @@
+1. Fazer Deploy no Tomcat
+
+Para fazer deploy to TreeRESTService no tomcat os passos são os seguintes:
+
+1.1. Verifique a configuração da base de dados no arquivo src/main/resources/WEB-INF/persistence.xml para ter certeza 
+   que o driver, nome da base de dados, usuário, e senha são os mesmos da sua base de dados local. A versão do repositório
+   assume o use da base de dados MySQL, instalada localmente, com as credenciais de acesso: user: root; password=root. Além disso, 
+   o nome da base de dados onde é treedb. Dentro da base de dados treedb as tabelas necessárias para a execução do TreeRESTService
+   serão geradas automaticamente no primeiro acesso ao serviço. Caso seja mais conveniente, é possível editar o arquivo persistence.xml
+   diretamente na release TreeRESTService.war disponibilizado no repositório, compactando novamente o TreeRESTService.war com as alterações
+   realizadas;
+
+1.2. No caso de compilar o código fonte, o TreeRESTService.war pode ser gerado usando o seguinte comando do maven:
+
+	$ mvn clean package
+	
+1.3. Após gerar o TreeRESTService.war, é necessário copiá-lo para dentro do Tomcat, no diretório webapps. No caso de utilizar diretamente o 
+   TreeRESTService.war disponibilizado no repositório, será somente necessário copiá-lo para o diretório webapps do Tomcat;
+
+1.4. Inicie o Tomcat e o serviço poderá ser acessado (em uma instalação padrão) no seguinte endereço:
+
+	http://localhost:8080/TreeRESTService/rest/node
+	
+	Consulte o HOW-TO-pt para saber quais os métodos do serviço estão disponíveis para utilização.
+	
+1.5. Para realizar testes com o TreeRESTService foi disponibilizado um projeto do SOAPUI no repositório em src/test/resources/SOAPUI.
